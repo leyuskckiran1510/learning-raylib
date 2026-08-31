@@ -23,25 +23,30 @@
 
 .PHONY: all clean
 
+# Define default C compiler: CC
+#------------------------------------------------------------------------------------------------
+CC = tcc
+
 # Define required environment variables
 #------------------------------------------------------------------------------------------------
 # Define target platform: PLATFORM_DESKTOP, PLATFORM_WEB, PLATFORM_DRM, PLATFORM_ANDROID
 PLATFORM              ?= PLATFORM_DESKTOP
 
 # Define project variables
-PROJECT_NAME          ?= raylib_game
+PROJECT_NAME          ?= game
 PROJECT_VERSION       ?= 1.0
 PROJECT_BUILD_PATH    ?= .
+PROJECT_SOURCE_DIR    ?= src
 PROJECT_SOURCE_FILES  ?= \
-    raylib_game.c \
-    screen_logo.c \
-    screen_title.c \
-    screen_options.c \
-    screen_gameplay.c \
-    screen_ending.c
+    $(PROJECT_SOURCE_DIR)/raylib_game.c \
+    $(PROJECT_SOURCE_DIR)/screen_logo.c \
+    $(PROJECT_SOURCE_DIR)/screen_title.c \
+    $(PROJECT_SOURCE_DIR)/screen_options.c \
+    $(PROJECT_SOURCE_DIR)/screen_gameplay.c \
+    $(PROJECT_SOURCE_DIR)/screen_ending.c
 
 # raylib library variables
-RAYLIB_PATH           ?= C:\raylib\raylib
+RAYLIB_PATH           ?= raylib
 RAYLIB_INCLUDE_PATH   ?= $(RAYLIB_PATH)/src
 RAYLIB_LIB_PATH       ?= $(RAYLIB_PATH)/src
 # Library type used for raylib: STATIC (.a) or SHARED (.so/.dll)
@@ -106,9 +111,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     export PATH        := $(EMSDK_PATH);$(EMSCRIPTEN_PATH);$(CLANG_PATH);$(NODE_PATH);$(PYTHON_PATH);$(PATH)
 endif
 
-# Define default C compiler: CC
-#------------------------------------------------------------------------------------------------
-CC = gcc
+
 
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),OSX)
@@ -345,33 +348,34 @@ $(PROJECT_NAME): $(OBJS)
 %.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
 
+
 # Clean everything
 clean:
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
-	del *.o *.exe /s
+	cd "$(PROJECT_SOURCE_DIR)" && del *.o *.exe /s
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-	find . -type f -executable -delete
-	rm -fv *.o
+	cd "$(PROJECT_SOURCE_DIR)" && find . -type f -executable -delete
+	cd "$(PROJECT_SOURCE_DIR)" && rm -fv *.o
     endif
     ifeq ($(PLATFORM_OS),OSX)
-	rm -f *.o external/*.o $(PROJECT_NAME)
+	cd "$(PROJECT_SOURCE_DIR)" && rm -f *.o external/*.o $(PROJECT_NAME)
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_DRM)
-	find . -type f -executable -delete
-	rm -fv *.o
+	cd "$(PROJECT_SOURCE_DIR)" && find . -type f -executable -delete
+	cd "$(PROJECT_SOURCE_DIR)" && rm -fv *.o
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     ifeq ($(PLATFORM_OS),WINDOWS)
-	del *.o *.html *.js
+	cd "$(PROJECT_SOURCE_DIR)" && del *.o *.html *.js
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-	rm -fv *.o $(PROJECT_NAME).data $(PROJECT_NAME).html $(PROJECT_NAME).js $(PROJECT_NAME).wasm
+	cd "$(PROJECT_SOURCE_DIR)" && rm -fv *.o $(PROJECT_NAME).data $(PROJECT_NAME).html $(PROJECT_NAME).js $(PROJECT_NAME).wasm
     endif
     ifeq ($(PLATFORM_OS),OSX)
-	rm -f *.o $(PROJECT_NAME).data $(PROJECT_NAME).html $(PROJECT_NAME).js $(PROJECT_NAME).wasm
+	cd "$(PROJECT_SOURCE_DIR)" && rm -f *.o $(PROJECT_NAME).data $(PROJECT_NAME).html $(PROJECT_NAME).js $(PROJECT_NAME).wasm
     endif
 endif
 	@echo Cleaning done

@@ -78,3 +78,7 @@ android.*
 *.js
 !src/minshell.html
 !src/shell.html
+
+raylib/
+game
+.vscode/

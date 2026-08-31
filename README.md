@@ -1,96 +1,31 @@
------------------------------------
-_DISCLAIMER:_
-
-Welcome to the **raylib game template**!
-
-This template provides a base structure to start developing a small raylib game in plain C. The repo is also pre-configured with a default `LICENSE` (zlib/libpng) and a `README.md` (this one) to be properly filled by users. Feel free to change the LICENSE as required.
-
-All the sections defined by `$(Data to Fill)` are expected to be edited and filled properly. It's recommended to delete this disclaimer message after editing this `README.md` file.
-
------------------------------------
-
-## Getting Started with this template
-
-### Windows: Visual Studio
-
-- After extracting the zip, the parent folder `raylib-game-template` should exist in the same directory as `raylib` itself.  So, your file structure should look like this:
-    - Some parent directory
-        - `raylib`
-            - the contents of https://github.com/raysan5/raylib
-        - `raylib-game-template`
-            - this `README.md` and all other raylib-game-template files
-- If using Visual Studio, open projects/VS2022/raylib-game-template.sln
-- Select on `raylib_game` in the solution explorer, then in the toolbar at the top, click `Project` > `Set as Startup Project`
-- Now you're all set up!  Click `Local Windows Debugger` with the green play arrow and the project will run.
-
-### Linux
-
-When setting up this template on linux for the first time, install the dependencies from this page:
-([Working on GNU Linux](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux))
-
-You can use this templates in a few ways: using Visual Studio, using CMake, or make your own build setup. This repository comes with Visual Studio and CMake already set up.
-
-Chose one of the follow setup options that fit in you development environment.
-
-### CLI: Makefile
-
-```sh
-mkdir ~/raylib-gamejam && cd ~/raylib-gamejam
-git clone --depth 1 --branch 6.0 https://github.com/raysan5/raylib
+# Learning Raylib easiest game setup
+>> this project was bootstraped from [raySan game template](https://github.com/raysan5/raylib-game-template)
+>> the below steps assume you are in your project dir, aka this readme file dir
+0. You need `make` and dependencies of [raylib](https://github.com/raysan5/raylib)
+1. Install Raylib as
+```
+git clone --depth 1  https://github.com/raysan5/raylib
 make -C raylib/src
-git clone https://github.com/$(User Name)/$(Repo Name).git
-cd $(Repo Name)
-make -C src
-src/raylib_game
+```
+2. You are done start making game
+3. To complie your game
+```
+make
+```
+4. To clean up 
+```
+make clean
 ```
 
-This template has been created to be used with raylib (www.raylib.com) and it's licensed under an unmodified zlib/libpng license.
+Easiest raylib setup and on go process
 
-_Copyright (c) 2014-2026 Ramon Santamaria ([@raysan5](https://github.com/raysan5))_
-
------------------------------------
-
-## $(Game Title)
-
-![$(Game Title)](screenshots/screenshot000.png "$(Game Title)")
-
-### Description
-
-$(Your Game Description)
-
-### Features
-
- - $(Game Feature 01)
- - $(Game Feature 02)
- - $(Game Feature 03)
-
-### Controls
-
-Keyboard:
- - $(Game Control 01)
- - $(Game Control 02)
- - $(Game Control 03)
-
-### Screenshots
-
-_TODO: Show your game to the world, animated GIFs recommended!._
-
-### Developers
-
- - $(Developer 01) - $(Role/Tasks Developed)
- - $(Developer 02) - $(Role/Tasks Developed)
- - $(Developer 03) - $(Role/Tasks Developed)
-
-### Links
-
- - YouTube Gameplay: $(YouTube Link)
- - itch.io Release: $(itch.io Game Page)
- - Steam Release: $(Steam Game Page)
-
-### License
-
-This project sources are licensed under an unmodified zlib/libpng license, which is an OSI-certified, BSD-like license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
-
-$(Additional Licenses)
-
-*Copyright (c) $(Year) $(User Name) ($(User Twitter/GitHub Name))*
+## I want to install raylib once for all my other projects. How ?
+0. git clone and make the project as shown in above step, 0-1 in any directory
+1. open `Makefile`
+2. find `RAYLIB_PATH           ?= raylib`, and change it, for example see below
+    1. `RAYLIB_PATH           ?= $HOME/.opt/libs/raylib`,
+    2. This assumes you have git clone the raylib inside the `$HOME/.opt/libs/`
+    3. and ran `make -C raylib/src` on `$HOME/.opt/libs/`
+    4. so based on this, pick your folder for global raylib installation 
+    5. and update the make file as your need
+ 
